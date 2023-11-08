@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.8" integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr" crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>NEREDESIN</h1>
+<div hx-get="/hello">
+    Put To Messages
+</div>
+<h1 class="text-3xl font-bold underline">
+    Hello world!  <span th:text="${message}"></span>
+</h1>
+</body>
+</html>
