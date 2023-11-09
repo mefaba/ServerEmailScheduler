@@ -16,10 +16,9 @@ public class Main {
             @Override
             public void handle(@NotNull Context context) throws Exception {
                 Map<String,String> templateVariables = new HashMap<>();
-                templateVariables.put("message", "Allah Thymeleaf!");
-                context.render("templates/index.html",templateVariables);
+                templateVariables.put("message", "Tanri Peeble!");
+                context.render("templates/index.peb",templateVariables);
             }
-
         });
 
         app.start(7070);
