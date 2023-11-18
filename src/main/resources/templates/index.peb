@@ -1,28 +1,76 @@
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.8" integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <h1>NEREDESIN</h1>
-    <div hx-get="/hello">
-        Put To Messages
-    </div>
-    <h1 class="text-3xl font-bold underline">
-        Hello world! {{message}}
-    </h1>
-
-    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your message</label>
-    <div class="container mx-auto px-4">
-        <div class="w-1/3">
-            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+    <div class="flex flex-col h-screen" id="app" class="flex flex-col h-screen">
+        <!-- SECTION TOP -->
+        <div class="flex justify-center" id="section-top">
+            <div>
+                <p class="mt-2 text-3xl font-bold sm:text-4xl">
+                    Server Email Scheduler
+                </p>
+            </div>
+        </div>
+        <!-- SECTION MAIN -->
+        <div id="section-main" class="flex p-2 flex-grow">
+            <div id="left-panel" class="flex flex-col basis-1/2 items-center p-2">
+                <div class="rounded mb-2 w-full h-32 bg-slate-200"><!-- Maybe a Chart Component -->Maybe a Chart Component</div>
+                <div class="rounded mb-2 w-full h-32 bg-slate-200"><!-- Maybe a Table Component -->
+                    <div><!-- title-section -->Table Component</div>
+                    <div><!-- csv-section -->
+                        <div class="mb-3">
+                            <label for="formFile" class="mb-2 inline-block text-neutral-700 dark:text-neutral-200">Default file input example</label>
+                            <input class="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary" type="file" id="formFile" accept=".csv" />
+                        </div>
+                    </div>
+                    <div><!-- button-section -->Trigger Logic</div>
+                </div>
+                <div class="rounded mb-2 w-full h-32 bg-slate-200"><!-- Maybe a Char Component -->Maybe a Chart Component</div>
+                <div class="flex-grow"><!-- Empty Space Filler --></div>
+                <div class="rounded mb-2 w-full h-32 bg-slate-600"><!-- Maybe a Char Component -->Maybe a Scheduler Component</div>
+                <div id="left-panel-buttons" class="p-4">
+                    <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        <!-- Add Button -->
+                        <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                        </svg>
+                        Add
+                    </button>
+                    <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        <!-- Save Button -->
+                        <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                        </svg>
+                        Save
+                    </button>
+                </div>
+            </div>
+            <div id="right-panel" class="flex flex-col basis-1/2 items-center p-2">
+                <div class="flex flex-grow w-full">
+                    <!-- Text Area -->
+                    <textarea id="message" class="p-2.5 w-full h-full text-sm text-gray-900 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+                </div>
+                <div class="p-4">
+                    <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        <!-- Test Email Button -->
+                        <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                        </svg>
+                        Test Email
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-
 </body>
 
 </html>
