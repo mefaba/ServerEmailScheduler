@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CsvReaderTest {
     private static final Logger logger = LoggerFactory.getLogger(CsvReaderTest.class);
     private static final String url = "your_database_url_here";
-    private static final String fileName = "mySample";
-    private static final String directory = "C:\\Users\\murat\\Desktop\\";
+    private static final String fileName = "test_0";
+    private static final String directory = "/home/murat/IdeaProjects/ServerEmailScheduler/src/test/resources/";
     private static final String separator = ";";
     private static final String fileExtension = ".csv";
 
