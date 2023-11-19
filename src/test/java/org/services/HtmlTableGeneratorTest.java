@@ -1,5 +1,6 @@
 package org.services;
 
+import org.emailreportmanager.services.HtmlTableGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

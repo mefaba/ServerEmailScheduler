@@ -1,45 +1,41 @@
-package org.webdemo;
+package org.emailreportmanager.controllers;
 
-import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+import io.javalin.http.UploadedFile;
+import org.emailreportmanager.configurations.CsvConfiguration;
+import org.emailreportmanager.configurations.repository.CsvConfigurationRepository;
+import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.configurations.CsvConfiguration;
-import org.configurations.repository.CsvConfigurationRepository;
-import org.jetbrains.annotations.NotNull;
-import org.services.H2ConsoleStarter;
-import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
-import java.util.HashMap;
-import java.util.Map;
+public class DataController {
+    public static void handlePostRequest(Context ctx) {
+        // Access request body
+        String requestBody = ctx.body();
+        System.out.println("Hello");
+        System.out.println(requestBody);
 
-public class Main {
-    public static void main(String[] args) {
-        Javalin app = Javalin.create();
-        app.get("/hello", ctx -> ctx.result("Hello World"));
-        app.get("/", new Handler() {
-            @Override
-            public void handle(@NotNull Context context) throws Exception {
-                Map<String,String> templateVariables = new HashMap<>();
-                templateVariables.put("message", "Tanri Peeble!");
-                context.render("templates/index.peb",templateVariables);
-            }
-        });
-
+        //populate entity
         CsvConfiguration csvConfiguration = new CsvConfiguration();
         csvConfiguration.setPath("/home/murat/IdeaProjects/ServerEmailScheduler/src/test/resources/test_0.csv");
         csvConfiguration.setSeparator(";");
 
-        H2ConsoleStarter h2ConsoleStarter = new H2ConsoleStarter();
-        h2ConsoleStarter.startServer();
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("csvConfiguration");
         EntityManager em = emf.createEntityManager();
         JpaRepositoryFactory factory = new JpaRepositoryFactory(em);
         CsvConfigurationRepository repo = factory.getRepository(CsvConfigurationRepository.class);
 
+
+        //save populated data into database
         try {
             em.getTransaction().begin();
             repo.save(csvConfiguration);
@@ -52,7 +48,11 @@ public class Main {
             em.close();
         }
 
+        // Process the data as needed
+        // For example, you can parse JSON or perform other operations
 
-        app.start(7070);
+        // Send a response
+        ctx.status(200).result("POST request received successfully murat");
     }
+
 }

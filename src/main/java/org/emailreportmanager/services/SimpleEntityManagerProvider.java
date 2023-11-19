@@ -1,4 +1,4 @@
-package org.services;
+package org.emailreportmanager.services;
 
 import jakarta.persistence.EntityManager;
 

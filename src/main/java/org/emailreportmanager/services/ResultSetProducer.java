@@ -1,6 +1,6 @@
-package org.services;
+package org.emailreportmanager.services;
 
-import org.configurations.CsvConfiguration;
+import org.emailreportmanager.configurations.CsvConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

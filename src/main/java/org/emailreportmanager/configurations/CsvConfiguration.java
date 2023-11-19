@@ -1,4 +1,4 @@
-package org.configurations;
+package org.emailreportmanager.configurations;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

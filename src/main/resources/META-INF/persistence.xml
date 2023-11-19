@@ -5,7 +5,7 @@
              version="2.1">
 
     <persistence-unit name="csvConfiguration" transaction-type="RESOURCE_LOCAL">
-        <class>org.configurations.CsvConfiguration</class>
+        <class>org.emailreportmanager.configurations.CsvConfiguration</class>
         <properties>
             <!-- Configurations for the database -->
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

@@ -1,6 +1,7 @@
 package org.services;
 
-import org.configurations.CsvConfiguration;
+import org.emailreportmanager.configurations.CsvConfiguration;
+import org.emailreportmanager.services.ResultSetProducer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
