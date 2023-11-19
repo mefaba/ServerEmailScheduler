@@ -1,8 +1,10 @@
 package org.configurations;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import org.springframework.lang.Nullable;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+import java.nio.charset.Charset;
+import java.util.Locale;
 
 
 @Entity
@@ -12,27 +14,26 @@ public class CsvConfiguration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String charset ;
-    private String columnTypes ;
-    private Boolean defectiveHeaders;
-    @NotEmpty
+    private String charset = Charset.defaultCharset().name();
+    private String columnTypes = null;
+    private Boolean defectiveHeaders = false;
+    @NotNull
     private String path;
-    private String headerline;
-    private Boolean ignoreNonParseableLines ;
-    private String missingValue;
-    private Character quotechar;
-    private String locale;
-    @NotEmpty
-    private String separator;
-    private Boolean suppressHeaders;
-    private String timestampFormat ;
-    private String timeFormat ;
-    private String dateFormat ;
-    private Boolean trimHeaders ;
-    private Boolean trimValues ;
-    @NotEmpty
+    private String headerline = null;
+    private Boolean ignoreNonParseableLines = false;
+    private String missingValue = null;
+    private String quotechar = "\"";
+    private String locale = Locale.getDefault().toString();
+    @NotNull
+    private String separator = ",";
+    private Boolean suppressHeaders = false;
+    private String timestampFormat = "yyyy-MM-dd HH:mm:ss";
+    private String timeFormat = "HH:mm:ss";
+    private String dateFormat = "yyyy-MM-dd";
+    private Boolean trimHeaders = true;
+    private Boolean trimValues = false;
+    @NotNull
     private Boolean isDeleteFlag = false;
-
 
     // Getters and Setters
 
@@ -92,11 +93,11 @@ public class CsvConfiguration {
         this.missingValue = missingValue;
     }
 
-    public Character getQuotechar() {
+    public String getQuotechar() {
         return quotechar;
     }
 
-    public void setQuotechar(Character quotechar) {
+    public void setQuotechar(String quotechar) {
         this.quotechar = quotechar;
     }
 
@@ -170,6 +171,5 @@ public class CsvConfiguration {
     public void setDeleteFlag(Boolean deleteFlag) {
         isDeleteFlag = deleteFlag;
     }
-
 
 }

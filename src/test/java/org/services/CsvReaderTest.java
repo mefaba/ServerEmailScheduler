@@ -1,5 +1,6 @@
 package org.services;
 
+import org.configurations.CsvConfiguration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
@@ -14,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CsvReaderTest {
     private static final Logger logger = LoggerFactory.getLogger(CsvReaderTest.class);
-    private static final String url = "your_database_url_here";
     private static final String fileName = "test_0";
     private static final String directory = "/home/murat/IdeaProjects/ServerEmailScheduler/src/test/resources/";
     private static final String separator = ";";
@@ -31,7 +31,12 @@ class CsvReaderTest {
 
     @Test
     public void testGetResultSet() {
-        CsvReader csvReader = new CsvReader(directory, fileName, separator, fileExtension);
+
+        CsvConfiguration csvConfiguration = new CsvConfiguration();
+        csvConfiguration.setPath(directory + fileName + fileExtension);
+        csvConfiguration.setSeparator(separator);
+
+        ResultSetProducer csvReader = new ResultSetProducer(csvConfiguration);
         ResultSet results = csvReader.getResultSet();
         try {
             assertNotNull(results);
@@ -47,7 +52,10 @@ class CsvReaderTest {
     }
 
     protected ResultSet getTestGetResultSet () throws SQLException {
-        CsvReader csvReader = new CsvReader(directory, fileName, separator, fileExtension);
+        CsvConfiguration csvConfiguration = new CsvConfiguration();
+        csvConfiguration.setPath(directory + fileName + fileExtension);
+        csvConfiguration.setSeparator(separator);
+        ResultSetProducer csvReader = new ResultSetProducer(csvConfiguration);
         ResultSet results = csvReader.getResultSet();
         StringBuilder sb = new StringBuilder();
         ResultSetMetaData resultSetMetaData = results.getMetaData();

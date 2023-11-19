@@ -65,6 +65,7 @@
             <scope>test</scope>
         </dependency>
 
+
         <!-- spring thingsf -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -92,10 +93,26 @@
             <version>3.0.2</version>
         </dependency>
         <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>2.7.17</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.6.15.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.0.60</version>
+        </dependency>
+
 
         <!--> MURATTAN <-->
     </dependencies>
