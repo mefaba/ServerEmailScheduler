@@ -22,7 +22,7 @@ org.h2.jdbc.JdbcSQLException: Column min_value not found [42S22-60]
 	at org.hibernate.jpa.HibernatePersistenceProvider.createEntityManagerFactory(HibernatePersistenceProvider.java:56)
 	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:79)
 	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:54)
-	at org.webdemo.Main.main(Main.java:38)
+	at org.emailreportmanager.Main.main(Main.java:38)
 11-19 22:24:38 jdbc[2]: SQLException
 org.h2.jdbc.JdbcSQLException: Column min_value not found [42S22-60]
 	at org.h2.message.Message.getSQLException(Message.java:84)
@@ -47,7 +47,7 @@ org.h2.jdbc.JdbcSQLException: Column min_value not found [42S22-60]
 	at org.hibernate.jpa.HibernatePersistenceProvider.createEntityManagerFactory(HibernatePersistenceProvider.java:56)
 	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:79)
 	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:54)
-	at org.webdemo.Main.main(Main.java:38)
+	at org.emailreportmanager.Main.main(Main.java:38)
 11-19 22:25:10 jdbc[2]: SQLException
 org.h2.jdbc.JdbcSQLException: Column min_value not found [42S22-60]
 	at org.h2.message.Message.getSQLException(Message.java:84)
@@ -72,4 +72,4 @@ org.h2.jdbc.JdbcSQLException: Column min_value not found [42S22-60]
 	at org.hibernate.jpa.HibernatePersistenceProvider.createEntityManagerFactory(HibernatePersistenceProvider.java:56)
 	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:79)
 	at javax.persistence.Persistence.createEntityManagerFactory(Persistence.java:54)
-	at org.webdemo.Main.main(Main.java:38)
+	at org.emailreportmanager.Main.main(Main.java:38)
