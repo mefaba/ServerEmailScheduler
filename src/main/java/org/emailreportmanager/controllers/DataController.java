@@ -16,11 +16,12 @@ import java.io.OutputStream;
 
 public class DataController {
     public static void handlePostRequest(Context ctx) throws IOException {
-        // Access request body
+        // Recieve file from request body, Access request body
         UploadedFile uploaded_file = ctx.uploadedFiles().get(0);
         InputStream inputStream = uploaded_file.getContent();
-        
-        OutputStream outputStream = new FileOutputStream("C:\\Temp\\text1.csv");
+
+        //Write to file
+        OutputStream outputStream = new FileOutputStream("C:\\Temp\\test_email.csv");
         int data = uploaded_file.getContent().read();
         while(data != -1) {
             //do something with data...
@@ -31,22 +32,15 @@ public class DataController {
         inputStream.close();
         outputStream.close();
 
-
-
-//        for (Map.Entry<String, List<String>> entry : requestBodyMap.entrySet()) {
-//            System.out.println(entry.getKey() + ": " + entry.getValue());
-//        }
         //populate entity
         CsvConfiguration csvConfiguration = new CsvConfiguration();
-        csvConfiguration.setPath("/home/murat/IdeaProjects/ServerEmailScheduler/src/test/resources/test_0.csv");
+        csvConfiguration.setPath("C:\\Temp\\test_email.csv");
         csvConfiguration.setSeparator(";");
-
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("csvConfiguration");
         EntityManager em = emf.createEntityManager();
         JpaRepositoryFactory factory = new JpaRepositoryFactory(em);
         CsvConfigurationRepository repo = factory.getRepository(CsvConfigurationRepository.class);
-
 
         //save populated data into database
         try {
@@ -65,7 +59,7 @@ public class DataController {
         // For example, you can parse JSON or perform other operations
 
         // Send a response
-        ctx.status(200).result("POST request received successfully murat");
+        ctx.status(200).result("POST request received successfully");
     }
 
 }
