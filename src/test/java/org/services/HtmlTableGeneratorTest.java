@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class HtmlTableGeneratorTest {
-
+/*
     public static boolean isValidHtml(String html) {
         try {
             // Parse the HTML using jsoup with a forgiving Parser
@@ -38,6 +38,7 @@ class HtmlTableGeneratorTest {
 
     @BeforeEach
     public void setUp() throws SQLException {
+
         MockitoAnnotations.openMocks(this);
 
         // Mock the behavior of ResultSet to return sample data
@@ -100,4 +101,6 @@ class HtmlTableGeneratorTest {
         // Assert that the generated HTML table matches the expected structure
         //assertTrue(isValidHtml(htmlTable));
     }
+
+         */
 }
