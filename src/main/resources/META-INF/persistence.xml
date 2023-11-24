@@ -4,8 +4,7 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="csvConfiguration" transaction-type="RESOURCE_LOCAL">
-        <class>org.emailreportmanager.configurations.CsvConfiguration</class>
+    <persistence-unit name="reportMailManagerPersistence" transaction-type="RESOURCE_LOCAL">
         <properties>
             <!-- Configurations for the database -->
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

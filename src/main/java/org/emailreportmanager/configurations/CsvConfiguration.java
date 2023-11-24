@@ -1,19 +1,22 @@
 package org.emailreportmanager.configurations;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import java.io.File;
 import java.nio.charset.Charset;
+import java.sql.*;
 import java.util.Locale;
+import java.util.Properties;
 
 
 @Entity
-@Table(name = "csv_configuration")
-public class CsvConfiguration {
+@Table(name = "ds_config_csv")
+public class CsvConfiguration extends DataSourceConfiguration {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String charset = Charset.defaultCharset().name();
     private String columnTypes = null;
     private Boolean defectiveHeaders = false;
@@ -36,6 +39,9 @@ public class CsvConfiguration {
     private Boolean isDeleteFlag = false;
 
     // Getters and Setters
+    public String getCharsetInfo() {
+        return "Defines the character set name of the files being read, such as UTF-16.";
+    }
 
     public String getCharset() {
         return charset;
@@ -170,6 +176,71 @@ public class CsvConfiguration {
 
     public void setDeleteFlag(Boolean deleteFlag) {
         isDeleteFlag = deleteFlag;
+    }
+
+
+    @Override
+    public ResultSet produceResultSet() {
+
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        String url, fileBaseName = "";
+        Properties props = new Properties();
+
+        System.out.println("000000000 running with CsvConfiguration");
+        File file = new File(getPath());
+        String directory =  file.getParent();
+        String fileName = file.getName();
+        String fileExtension;
+
+        int dotIndex = fileName.lastIndexOf('.');
+        if (dotIndex > 0 && dotIndex <= fileName.length() - 2) {
+            fileBaseName = fileName.substring(0, dotIndex);
+        }
+
+        if (dotIndex > 0 && dotIndex <= fileName.length() - 2) {
+            fileExtension = fileName.substring( dotIndex);
+        } else {
+            fileExtension = ".csv";
+        }
+
+        props.put("fileExtension", fileExtension);
+        props.put("charset", getCharset());
+        if (getColumnTypes() != null)
+            props.put("columnTypes", getColumnTypes());
+        props.put("defectiveHeaders", getDefectiveHeaders());
+        if (getHeaderline() != null)
+            props.put("headerline", getHeaderline());
+        props.put("ignoreNonParseableLines", getIgnoreNonParseableLines());
+        if (getMissingValue() != null)
+            props.put("missingValue", getMissingValue());
+        props.put("quotechar", getQuotechar());
+        props.put("locale", getLocale());
+        props.put("separator", getSeparator());
+        props.put("suppressHeaders", getSuppressHeaders());
+        props.put("timestampFormat", getTimestampFormat());
+        props.put("timeFormat", getTimeFormat());
+        props.put("dateFormat", getDateFormat());
+        props.put("trimHeaders", getTrimHeaders());
+        props.put("trimValues", getTrimValues());
+        url = "jdbc:relique:csv:" + directory +"/" ;
+
+        try {
+            Class.forName("org.relique.jdbc.csv.CsvDriver");
+            logger.info("url: " + url);
+            logger.info("props: " + props);
+            Connection conn = DriverManager.getConnection(url, props);
+            logger.info("connection: " + conn.getSchema());
+            Statement stmt = conn.createStatement();
+            String query = "SELECT * from " + fileBaseName ;
+            logger.info("query: " + query);
+            return stmt.executeQuery(query);
+
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
 }
