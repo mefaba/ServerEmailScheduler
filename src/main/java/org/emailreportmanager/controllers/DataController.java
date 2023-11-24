@@ -17,11 +17,12 @@ import java.io.OutputStream;
 public class DataController {
     public static void handlePostRequest(Context ctx) throws IOException {
         // Recieve file from request body, Access request body
+
         UploadedFile uploaded_file = ctx.uploadedFiles().get(0);
         InputStream inputStream = uploaded_file.getContent();
 
         //Write to file
-        OutputStream outputStream = new FileOutputStream("C:\\Temp\\test_email.csv");
+        OutputStream outputStream = new FileOutputStream("./tmp/test_email.csv");
         int data = uploaded_file.getContent().read();
         while(data != -1) {
             //do something with data...
@@ -34,8 +35,14 @@ public class DataController {
 
         //populate entity
         CsvConfiguration csvConfiguration = new CsvConfiguration();
-        csvConfiguration.setPath("C:\\Temp\\test_email.csv");
+        csvConfiguration.setPath("./tmp/test_email.csv");
         csvConfiguration.setSeparator(";");
+        //Result set produce
+
+        //Table generate
+
+        //Send response back to client
+
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("csvConfiguration");
         EntityManager em = emf.createEntityManager();

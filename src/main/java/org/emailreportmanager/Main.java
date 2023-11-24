@@ -3,15 +3,10 @@ package org.emailreportmanager;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.emailreportmanager.configurations.CsvConfiguration;
-import org.emailreportmanager.configurations.repository.CsvConfigurationRepository;
 import org.emailreportmanager.controllers.DataController;
+import org.emailreportmanager.controllers.WebController;
 import org.jetbrains.annotations.NotNull;
 import org.emailreportmanager.services.H2ConsoleStarter;
-import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,11 +29,13 @@ public class Main {
             }
         });
 
-        // Define your routes and controllers here
+        //data handlers
         app.post("/data", DataController::handlePostRequest);
 
 
 
+        //website handlers
+        app.get("/component-table", WebController::handlerComponentTable);
 
         //START APP SERVER
         app.start(7070);
