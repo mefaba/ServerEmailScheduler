@@ -2,8 +2,14 @@ package org.emailreportmanager.controllers;
 
 import io.javalin.http.Context;
 import io.javalin.http.UploadedFile;
+import org.emailreportmanager.components.Component;
+import org.emailreportmanager.components.TemplateHtml;
 import org.emailreportmanager.configurations.CsvConfiguration;
-import org.emailreportmanager.configurations.repository.CsvConfigurationRepository;
+import org.emailreportmanager.configurations.TableConfiguration;
+import org.emailreportmanager.configurations.repository.DataSourceConfigurationRepository;
+import org.emailreportmanager.services.EmailService;
+import org.emailreportmanager.services.GenerateComponent;
+import org.emailreportmanager.services.HtmlTableGenerator;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 
 import javax.persistence.EntityManager;
@@ -13,8 +19,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataController {
+    HtmlTableGenerator htmlTableGenerator= new HtmlTableGenerator();
     public static void handlePostRequest(Context ctx) throws IOException {
         // Recieve file from request body, Access request body
 
@@ -28,7 +37,6 @@ public class DataController {
             //do something with data...
             outputStream.write(data);
             data = inputStream.read();
-
         }
         inputStream.close();
         outputStream.close();
@@ -44,23 +52,30 @@ public class DataController {
         //Send response back to client
 
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("csvConfiguration");
-        EntityManager em = emf.createEntityManager();
-        JpaRepositoryFactory factory = new JpaRepositoryFactory(em);
-        CsvConfigurationRepository repo = factory.getRepository(CsvConfigurationRepository.class);
 
-        //save populated data into database
-        try {
-            em.getTransaction().begin();
-            repo.save(csvConfiguration);
-            em.getTransaction().commit();
 
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
+        TableConfiguration tableConfiguration = new TableConfiguration();
+
+        List<Component> componentList = new ArrayList<>();
+        Component component = new GenerateComponent(csvConfiguration, tableConfiguration).getComponent();
+        TemplateHtml templateHtml = new TemplateHtml();
+
+        String componentId = component.getComponentId();
+        System.out.println(componentId);
+        templateHtml.setTemplateHtml("<html><body><h1>This is a Heading</h1><p>This is a paragraph.</p>"+ componentId + componentId+"<p>This is a footer.</p></body></html>");
+
+        componentList.add(component);
+
+        EmailService emailService = new EmailService(componentList, templateHtml);
+
+        emailService.getResult();
+
+        emailService.sendMail();
+
+
+
+
+
 
         // Process the data as needed
         // For example, you can parse JSON or perform other operations

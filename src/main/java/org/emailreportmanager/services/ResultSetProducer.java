@@ -1,6 +1,7 @@
 package org.emailreportmanager.services;
 
 import org.emailreportmanager.configurations.CsvConfiguration;
+import org.emailreportmanager.configurations.DataSourceConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +14,12 @@ public class ResultSetProducer {
     String url, fileBaseName;
     Properties props = new Properties();
 
+    public ResultSetProducer(DataSourceConfiguration dataSourceConfiguration) {
+        System.out.println("000000000 running with DataSourceConfiguration");
+    }
+
     ResultSetProducer(CsvConfiguration csvConfiguration) {
+        System.out.println("000000000 running with CsvConfiguration");
         File file = new File(csvConfiguration.getPath());
         String directory =  file.getParent();
         String fileName = file.getName();
@@ -51,6 +57,8 @@ public class ResultSetProducer {
         props.put("trimValues",csvConfiguration.getTrimValues());
         this.url = "jdbc:relique:csv:" + directory +"/" ;
     }
+
+
 
     public ResultSet getResultSet() {
 
