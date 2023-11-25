@@ -9,5 +9,36 @@
             </form>
         </div>
     </div>
-    <div><!-- button-section -->Trigger Logic</div>
+    <div><!-- response-section -->
+        <input id="table_response" type="text" value="" readonly name="table_response" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+    </div>
 </div>
+
+<script>
+    function sendData() {
+        const fileInput = document.getElementById('csvFileInput');
+
+        if (fileInput) {
+            const formData = new FormData();
+            console.log(formData);
+            formData.append("file", fileInput.files[0]);
+
+            fetch("/data", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                const inputEl = document.getElementById('table_response');
+                inputEl.value = data;
+            })
+            .catch(error => {
+                console.error('Error uploading file:', error);
+                // Handle errors
+            });
+        } else {
+            console.error('No file selected');
+            // Handle the case where no file is selected
+        }
+    }
+</script>
