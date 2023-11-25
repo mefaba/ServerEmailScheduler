@@ -17,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataController {
+    List<Component> componentList = new ArrayList<>();
 
     /*
      * POST - /data
      */
-    public static void handleChartData(Context ctx) throws IOException {
+    public void handleChartData(Context ctx) throws IOException {
         // Recieve file from request body, Access request body
         UploadedFile uploaded_file = ctx.uploadedFiles().get(0);
         InputStream inputStream = uploaded_file.getContent();
@@ -48,7 +49,7 @@ public class DataController {
         TableConfiguration tableConfiguration = new TableConfiguration();
 
         Component component = new GenerateComponent(csvConfiguration, tableConfiguration).getComponent();
-
+        this.componentList.add(component);
         String componentId = component.getComponentId();
         System.out.println(componentId);
 
@@ -59,19 +60,16 @@ public class DataController {
     /*
      * POST - /test-email
      */
-    public static void handleEmailData(Context context) {
+    public void handleEmailData(Context context) {
+        // templatehtml
         String dataEmail = context.formParam("data_email");
 
-        List<Component> componentList = new ArrayList<>();
-        /* STAART Email: Call this from email handler */
-        /*
-         * TemplateHtml templateHtml = new TemplateHtml();
-         * templateHtml.setTemplateHtml(dataEmail);
-         * 
-         * componentList.add(component);
-         * EmailService emailService = new EmailService(componentList, templateHtml);
-         * emailService.getResult();
-         */
+        TemplateHtml templateHtml = new TemplateHtml();
+        templateHtml.setTemplateHtml(dataEmail);
+
+        EmailService emailService = new EmailService(componentList, templateHtml);
+        emailService.sendMail();
+        emailService.getResult();
         /* END Email */
         context.result("Noluyo");
     }

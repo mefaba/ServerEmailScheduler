@@ -39,8 +39,13 @@ public class Main {
         });
 
         // data handlers
-        app.post("/data", DataController::handleChartData);
-        app.post("/test-email", DataController::handleEmailData);
+        DataController dataController = new DataController();
+        app.post("/data", ctx -> {
+            dataController.handleChartData(ctx);
+        });
+        app.post("/test-email", ctx -> {
+            dataController.handleEmailData(ctx);
+        });
 
         // website handlers
         app.get("/component-table", WebController::handlerComponentTable);

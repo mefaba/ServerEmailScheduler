@@ -12,6 +12,8 @@ import java.util.Properties;
 
 import java.util.List;
 
+import static org.emailreportmanager.services.ConfigProperties.config;
+
 public class EmailService {
     String result;
 
@@ -30,8 +32,8 @@ public class EmailService {
     }
 
     public void sendMail() {
-        final String username = "------@gmail.com";
-        final String password = "------";
+        final String username = config.getString("emailservice.username");
+        final String password = config.getString("emailservice.password");
 
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -49,10 +51,10 @@ public class EmailService {
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("-------@gmail.com"));
+            message.setFrom(new InternetAddress(config.getString("email.from")));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse("---------@live.com, ---------@outlook.com")
+                    InternetAddress.parse(config.getString("email.to"))
             );
             message.setSubject("Testing Gmail TLS");
             message.setContent(result, "text/html");
