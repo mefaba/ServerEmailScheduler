@@ -1,6 +1,6 @@
-package org.emailreportmanager.configurations.repository;
+package org.emailreportmanager.entities.configurations;
 
-import org.emailreportmanager.configurations.DataSourceConfiguration;
+import org.emailreportmanager.entities.configurations.DataSourceConfiguration;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DataSourceConfigurationRepository extends JpaRepository<DataSourceConfiguration,Long> {

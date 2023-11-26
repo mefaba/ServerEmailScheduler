@@ -1,21 +1,5 @@
 package org.services;
 
-import org.emailreportmanager.services.HtmlTableGenerator;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.parser.Parser;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class HtmlTableGeneratorTest {

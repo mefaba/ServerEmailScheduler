@@ -1,4 +1,4 @@
-package org.emailreportmanager.configurations;
+package org.emailreportmanager.entities.configurations;
 
 public enum CsvConfigurationEnum {
     CHARSET("String", "Java default", "Defines the character set name of the files being read, such as UTF-16."),
