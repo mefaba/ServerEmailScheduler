@@ -1,19 +1,5 @@
 package org.services;
 
-import org.emailreportmanager.configurations.CsvConfiguration;
-import org.emailreportmanager.services.ResultSetProducer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class CsvReaderTest {
     /*
     private static final Logger logger = LoggerFactory.getLogger(CsvReaderTest.class);

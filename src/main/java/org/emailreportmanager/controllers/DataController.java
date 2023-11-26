@@ -2,22 +2,30 @@ package org.emailreportmanager.controllers;
 
 import io.javalin.http.Context;
 import io.javalin.http.UploadedFile;
-import org.emailreportmanager.components.Component;
-import org.emailreportmanager.components.TemplateHtml;
-import org.emailreportmanager.configurations.CsvConfiguration;
-import org.emailreportmanager.configurations.TableConfiguration;
+import org.emailreportmanager.entities.MailTemplate;
+import org.emailreportmanager.entities.configurations.MailConfig;
+import org.emailreportmanager.entities.configurations.SmtpConfig;
+import org.emailreportmanager.entities.elements.Element;
+import org.emailreportmanager.entities.elements.TemplateHtml;
+import org.emailreportmanager.entities.configurations.CsvConfiguration;
+import org.emailreportmanager.entities.configurations.TableElementConfiguration;
 import org.emailreportmanager.services.EmailService;
-import org.emailreportmanager.services.GenerateComponent;
+import org.emailreportmanager.services.ElementFactory;
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.mail.internet.InternetAddress;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import static org.emailreportmanager.services.ConfigProperties.config;
 
 public class DataController {
-    List<Component> componentList = new ArrayList<>();
+    List<Element> componentList = new ArrayList<>();
 
     /*
      * POST - /data
@@ -46,11 +54,11 @@ public class DataController {
         csvConfiguration.setSeparator(";");
 
         // Table generate
-        TableConfiguration tableConfiguration = new TableConfiguration();
+        TableElementConfiguration tableElementConfiguration = new TableElementConfiguration();
 
-        Component component = new GenerateComponent(csvConfiguration, tableConfiguration).getComponent();
-        this.componentList.add(component);
-        String componentId = component.getComponentId();
+        Element element = new ElementFactory("element_name",csvConfiguration, tableElementConfiguration).getElement();
+        this.componentList.add(element);
+        String componentId = element.getElementCode();
         System.out.println(componentId);
 
         // Send a response to web-client
@@ -64,11 +72,27 @@ public class DataController {
         // templatehtml
         String dataEmail = context.formParam("data_email");
 
-        TemplateHtml templateHtml = new TemplateHtml();
-        templateHtml.setTemplateHtml(dataEmail);
+        //old
+        //TemplateHtml templateHtml = new TemplateHtml();
+        //templateHtml.setTemplateHtml(dataEmail);
 
-        EmailService emailService = new EmailService(componentList, templateHtml);
-        emailService.sendMail();
+        //new
+        String templateHtml  = dataEmail;
+
+        Properties properties = new Properties();
+        //properties.put("cc", "");  properties.put("priority", "");
+        String from = config.getString("email.from");
+        String to = config.getString("email.to");
+        String subject = "FM-dev-test";
+        MailConfig mailConfig = new MailConfig(from, to, subject, properties);
+
+        MailTemplate mailTemplate = new MailTemplate("FM-dev-testing", templateHtml, mailConfig);
+        for (Element e : componentList) {
+            mailTemplate.addElement(e);
+        } // new version of adding elements
+
+        EmailService emailService = new EmailService(new SmtpConfig());
+        emailService.sendMail(mailTemplate);
         emailService.getResult();
         /* END Email */
         context.result("Noluyo");

@@ -1,5 +1,6 @@
-package org.emailreportmanager.configurations;
+package org.emailreportmanager.entities.configurations;
 
+import org.hibernate.envers.Audited;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +15,7 @@ import java.util.Properties;
 
 
 @Entity
-@Table(name = "ds_config_csv")
+@Audited
 public class CsvConfiguration extends DataSourceConfiguration {
 
     private String charset = Charset.defaultCharset().name();

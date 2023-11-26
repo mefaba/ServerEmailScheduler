@@ -117,7 +117,11 @@
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>5.6.15.Final</version>
+        </dependency>
 
         <!--> MURATTAN <-->
     </dependencies>

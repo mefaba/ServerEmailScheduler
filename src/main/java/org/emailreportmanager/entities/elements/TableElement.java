@@ -1,18 +1,54 @@
-package org.emailreportmanager.services;
-import org.emailreportmanager.configurations.CsvConfiguration;
-import org.emailreportmanager.configurations.DataSourceConfiguration;
+package org.emailreportmanager.entities.elements;
 
+import org.emailreportmanager.entities.configurations.DataSourceConfiguration;
+import org.emailreportmanager.entities.configurations.TableElementConfiguration;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.StringJoiner;
+import java.util.Random;
 
-public class HtmlTableGenerator {
+@Entity
+@Audited
+@Table(name = "component_table")
+public class TableElement extends Element {
 
-    public static String generateHtmlTable(DataSourceConfiguration dsConfiguration) {
+    @NotAudited
+    @Transient
+    private String tableHtml;
+
+    @NotNull
+    @ManyToOne
+    private TableElementConfiguration tableElementConfiguration;
+
+    public TableElement(String elementName, TableElementConfiguration tableElementConfiguration, DataSourceConfiguration dataSourceConfiguration) {
+        this.tableElementConfiguration = tableElementConfiguration;
+        this.dataSourceConfiguration = dataSourceConfiguration;
+        this.elementName = elementName;
+        this.elementCode = "$T-"+elementName+"-"+new Random().nextInt(1000)+"$";
+    }
+
+    public String getTableHtml() {
+        return tableHtml;
+    }
+
+    public TableElementConfiguration getTableConfiguration() {
+        return tableElementConfiguration;
+    }
+
+    public void setTableConfiguration(TableElementConfiguration tableElementConfiguration) {
+        this.tableElementConfiguration = tableElementConfiguration;
+    }
+
+    @Override
+    public void render() {
         StringBuilder htmlTable = new StringBuilder();
         try {
-            ResultSet resultSet =  dsConfiguration.produceResultSet();
+            ResultSet resultSet =  dataSourceConfiguration.produceResultSet();
             ResultSetMetaData metaData = resultSet.getMetaData();
             int columnCount = metaData.getColumnCount();
 
@@ -51,7 +87,7 @@ public class HtmlTableGenerator {
             System.out.println(e);
         }
 
-        return htmlTable.toString();
+        this.tableHtml = htmlTable.toString();
     }
 
 }

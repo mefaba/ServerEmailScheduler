@@ -1,4 +1,4 @@
-package org.emailreportmanager.components;
+package org.emailreportmanager.entities.elements;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,0 +1,20 @@
+table {
+    width: 100%;
+    border-collapse: collapse; /* Collapse borders */
+    text-align: left; /* Align text to the left */
+    font-family: Arial, sans-serif; /* Font styling */
+}
+
+/* Header row styles */
+tr {
+    background-color: #f2f2f2; /* Light grey background */
+    color: #333; /* Dark text color */
+    padding: 10px; /* Padding for spacing */
+    border: 1px solid #ddd; /* Light border */
+}
+
+/* Data cell styles */
+td {
+    padding: 8px; /* Padding for spacing */
+    border: 1px solid #ddd; /* Light border */
+}
