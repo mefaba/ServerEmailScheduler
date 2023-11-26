@@ -9,7 +9,20 @@ import javax.persistence.*;
 @Table(name = "component_config_table")
 public class TableElementConfiguration extends ElementConfiguration {
 
-    private String someConfig;
-    private String someOtherConfig;
+
+    String cssFilePath = "/home/murat/IdeaProjects/ServerEmailScheduler/src/main/resources/element_styles/table_styles/modern.css";
+
+
+
+    String someOtherConfig;
+
+    public String getCssFilePath() {
+        return cssFilePath;
+    }
+
+    public void setCssFilePath(String cssFilePath) {
+        this.cssFilePath = cssFilePath;
+    }
+
 
 }

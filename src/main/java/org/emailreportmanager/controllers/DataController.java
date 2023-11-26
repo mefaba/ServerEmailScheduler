@@ -6,7 +6,6 @@ import org.emailreportmanager.entities.MailTemplate;
 import org.emailreportmanager.entities.configurations.MailConfig;
 import org.emailreportmanager.entities.configurations.SmtpConfig;
 import org.emailreportmanager.entities.elements.Element;
-import org.emailreportmanager.entities.elements.TemplateHtml;
 import org.emailreportmanager.entities.configurations.CsvConfiguration;
 import org.emailreportmanager.entities.configurations.TableElementConfiguration;
 import org.emailreportmanager.services.EmailService;

@@ -3,7 +3,6 @@ package org.emailreportmanager.entities;
 import org.emailreportmanager.entities.configurations.MailConfig;
 import org.emailreportmanager.entities.elements.Element;
 import org.emailreportmanager.entities.elements.TableElement;
-import org.emailreportmanager.entities.elements.TemplateHtml;
 import org.hibernate.envers.Audited;
 
 
@@ -95,18 +94,13 @@ public class MailTemplate {
 
 
     public void render() {
-        System.out.println(templateHtml);
-        System.out.println("started to rendering email template.");
+        renderedHtml = templateHtml;
         for (Element e : getElements() ) {
             e.render();
             if(e instanceof TableElement) {
-                System.out.println("e is an instanceof table element..");
-                System.out.println(e.getElementCode());
-                System.out.println(((TableElement) e).getTableHtml());
                 renderedHtml = templateHtml.replace(e.getElementCode(), ((TableElement) e).getTableHtml());
             }
         }
-        System.out.println(renderedHtml);
     }
 
 }

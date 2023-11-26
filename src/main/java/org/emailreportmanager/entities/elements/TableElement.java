@@ -7,10 +7,18 @@ import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Random;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 
 @Entity
 @Audited
@@ -46,6 +54,12 @@ public class TableElement extends Element {
 
     @Override
     public void render() {
+        this.tableHtml = renderHtmlWithData().toString();
+        this.tableHtml = applyCssToHtmlTable(renderHtmlWithData().toString());
+    }
+
+
+    private String renderHtmlWithData () {
         StringBuilder htmlTable = new StringBuilder();
         try {
             ResultSet resultSet =  dataSourceConfiguration.produceResultSet();
@@ -86,9 +100,55 @@ public class TableElement extends Element {
         } catch (SQLException e) {
             System.out.println(e);
         }
-
-        this.tableHtml = htmlTable.toString();
+        return htmlTable.toString();
     }
+
+    public String applyCssToHtmlTable(String htmlTable) {
+        try {
+            // Load CSS content
+            String cssContent = new String(Files.readAllBytes(Paths.get(tableElementConfiguration.getCssFilePath())));
+
+            // Parse the HTML table
+            Document document = Jsoup.parse(htmlTable);
+            document.outputSettings(new Document.OutputSettings().prettyPrint(false)); // To keep inline style format
+
+            // Apply the CSS to the HTML elements
+            applyCss(document, cssContent);
+
+            // Return the HTML table as a string
+            return document.body().html();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void applyCss(Document document, String cssContent) {
+        // This is a simplified implementation
+        // For a more comprehensive solution, consider integrating a CSS parser
+        Elements elements = document.select("table, th, td, tr");
+        for (org.jsoup.nodes.Element element : elements) {
+            String tagName = element.tagName();
+            String inlineStyle = extractCssForTag(cssContent, tagName);
+            element.attr("style", inlineStyle);
+        }
+    }
+
+
+    private String extractCssForTag(String cssContent, String tagName) {
+        // Simple extraction based on the tag name
+        // Note: This method doesn't handle complex CSS selectors; it's a basic implementation.
+        int startIndex = cssContent.indexOf(tagName + " {");
+        if (startIndex == -1) {
+            return ""; // No CSS found for the tag
+        }
+        int endIndex = cssContent.indexOf("}", startIndex);
+        if (endIndex == -1) {
+            return ""; // No closing brace found
+        }
+        return cssContent.substring(startIndex + tagName.length() + 2, endIndex).trim();
+    }
+
 
 }
 
