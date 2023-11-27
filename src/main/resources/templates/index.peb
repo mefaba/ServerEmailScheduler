@@ -49,6 +49,26 @@
             </div>
 
             <form hx-post="/test-email" hx-swap="none" id="right-panel" class="flex flex-col basis-1/2 items-center p-2">
+                <div class="w-full bg-white p-1 rounded-md shadow-md mb-2">
+                    <!-- Email From Input -->
+                    <div class="mb-1 flex">
+                        <label for="emailFrom" class="block text-gray-600 font-semibold mx-2 w-24">From</label>
+                        <input type="email" id="emailFrom" name="emailFrom" class="flex-grow px-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <!-- Email To Input -->
+                    <div class="mb-1 flex">
+                        <label for="emailTo" class="block text-gray-600 font-semibold mx-2 w-24">To</label>
+                        <input type="email" id="emailTo" name="emailTo" class="flex-grow px-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <!-- Email Subject Input -->
+                    <div class="mb-1 flex">
+                        <label for="emailSubject" class=" text-gray-600 font-semibold mx-2 w-24">Subject</label>
+                        <input type="text" id="emailSubject" name="emailSubject" class="flex-grow px-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+
+                </div>
                 <!-- Text Area -->
                 <textarea name="data_email" class="flex flex-grow p-2.5 w-full h-full text-sm text-gray-900 bg-gray-50 rounded border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
                 <div class="p-2">

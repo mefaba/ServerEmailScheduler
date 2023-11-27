@@ -41,7 +41,7 @@ public class Main {
         // data handlers
         DataController dataController = new DataController();
         app.post("/data", ctx -> {
-            dataController.handleChartData(ctx);
+            dataController.handleTableData(ctx);
         });
         app.post("/test-email", ctx -> {
             dataController.handleEmailData(ctx);

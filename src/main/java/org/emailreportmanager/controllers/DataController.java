@@ -10,9 +10,7 @@ import org.emailreportmanager.entities.configurations.CsvConfiguration;
 import org.emailreportmanager.entities.configurations.TableElementConfiguration;
 import org.emailreportmanager.services.EmailService;
 import org.emailreportmanager.services.ElementFactory;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.mail.internet.InternetAddress;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +27,7 @@ public class DataController {
     /*
      * POST - /data
      */
-    public void handleChartData(Context ctx) throws IOException {
+    public void handleTableData(Context ctx) throws IOException {
         // Recieve file from request body, Access request body
         UploadedFile uploaded_file = ctx.uploadedFiles().get(0);
         InputStream inputStream = uploaded_file.getContent();
@@ -55,7 +53,7 @@ public class DataController {
         // Table generate
         TableElementConfiguration tableElementConfiguration = new TableElementConfiguration();
 
-        Element element = new ElementFactory("element_name",csvConfiguration, tableElementConfiguration).getElement();
+        Element element = new ElementFactory("element_name", csvConfiguration, tableElementConfiguration).getElement();
         this.componentList.add(element);
         String componentId = element.getElementCode();
         System.out.println(componentId);
@@ -67,33 +65,26 @@ public class DataController {
     /*
      * POST - /test-email
      */
-    public void handleEmailData(Context context) {
+    public void handleEmailData(Context ctx) {
         // templatehtml
-        String dataEmail = context.formParam("data_email");
-
-        //old
-        //TemplateHtml templateHtml = new TemplateHtml();
-        //templateHtml.setTemplateHtml(dataEmail);
-
-        //new
-        String templateHtml  = dataEmail;
+        String rawEmailData = ctx.formParam("data_email");
 
         Properties properties = new Properties();
-        //properties.put("cc", "");  properties.put("priority", "");
-        String from = config.getString("email.from");
-        String to = config.getString("email.to");
-        String subject = "FM-dev-test";
+        // properties.put("cc", ""); properties.put("priority", "");
+        String from = ctx.formParam("emailFrom");
+        String to = ctx.formParam("emailTo");
+        String subject = ctx.formParam("emailSubject");
         MailConfig mailConfig = new MailConfig(from, to, subject, properties);
 
-        MailTemplate mailTemplate = new MailTemplate("FM-dev-testing", templateHtml, mailConfig);
+        MailTemplate mailTemplate = new MailTemplate("FM-dev-testing", rawEmailData, mailConfig);
         for (Element e : componentList) {
             mailTemplate.addElement(e);
         } // new version of adding elements
 
         EmailService emailService = new EmailService(new SmtpConfig());
-        emailService.sendMail(mailTemplate);
+        // emailService.sendMail(mailTemplate);
         emailService.getResult();
         /* END Email */
-        context.result("Noluyo");
+        ctx.result("Noluyo");
     }
 }
