@@ -5,16 +5,14 @@ import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.plugin.rendering.template.JavalinPebble;
 
-import org.emailreportmanager.controllers.DataController;
-import org.emailreportmanager.controllers.WebController;
+import org.emailreportmanager.controllers.EmailController;
+import org.emailreportmanager.controllers.TableController;
+import org.emailreportmanager.controllers.WebPageController;
 import org.jetbrains.annotations.NotNull;
 
 import com.mitchellbosecke.pebble.PebbleEngine;
 
 import org.emailreportmanager.services.H2ConsoleStarter;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
@@ -28,27 +26,28 @@ public class Main {
 
         // SETUP APP SERVER
         Javalin app = Javalin.create();
-        app.get("/hello", ctx -> ctx.result("Hello World"));
+
+        // page handlers
+        WebPageController webPageController = new WebPageController();
         app.get("/", new Handler() {
             @Override
             public void handle(@NotNull Context context) throws Exception {
-                Map<String, String> templateVariables = new HashMap<>();
-                templateVariables.put("message", "Tanri Pseeble!");
-                context.render("templates/index.peb", templateVariables);
+                webPageController.indexPage(context);
             }
         });
 
-        // data handlers
-        DataController dataController = new DataController();
-        app.post("/data", ctx -> {
-            dataController.handleTableData(ctx);
-        });
-        app.post("/test-email", ctx -> {
-            dataController.handleEmailData(ctx);
-        });
+        /* *** data handlers  *** */
+
+        //table
+        TableController tableController = new TableController();
+        app.post("/data", tableController::onSubmitTable);
+        app.get("/table", tableController::htmxTable);
+
+        EmailController emailController = new EmailController();
+        app.post("/test-email", emailController::handleEmailSubmit);
 
         // website handlers
-        app.get("/component-table", WebController::handlerComponentTable);
+
 
         // START APP SERVER
         app.start(7070);

@@ -7,7 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script src="https://unpkg.com/htmx.org@1.9.8" integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                fontFamily: {
+                    sans: ["Roboto", "sans-serif"],
+                    body: ["Roboto", "sans-serif"],
+                    mono: ["ui-monospace", "monospace"],
+                },
+            },
+            corePlugins: {
+                preflight: false,
+            },
+        };
+    </script>
 </head>
 
 <body>
@@ -24,7 +43,7 @@
         <div id="section-main" class="flex p-2 flex-grow">
             <div id="left-panel" class="flex flex-col basis-1/2 items-center p-2">
                 <div class="rounded mb-2 w-full h-32 bg-slate-200"><!-- Maybe a Chart Component -->Maybe a Chart Component</div>
-                <div hx-get="/component-table" hx-trigger="load" hx-swap="outerHTML">
+                <div hx-get="/table" hx-trigger="load" hx-swap="outerHTML">
                     <!--Table Component -->
                 </div>
                 <div class="rounded mb-2 w-full h-32 bg-slate-200"><!-- Maybe a Char Component -->Maybe a Chart Component</div>
@@ -85,7 +104,7 @@
     </div>
 
 
-
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
 </body>
 
 </html>
