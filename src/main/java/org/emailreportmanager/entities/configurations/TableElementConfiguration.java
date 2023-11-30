@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class TableElementConfiguration extends ElementConfiguration {
 
 
-    String cssFilePath = "/home/murat/IdeaProjects/ServerEmailScheduler/src/main/resources/element_styles/table_styles/modern.css";
+    String cssFilePath = "./src/main/resources/element_styles/table_styles/modern.css";
 
 
 
