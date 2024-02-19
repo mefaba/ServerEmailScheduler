@@ -2,9 +2,8 @@
 
 Using
 
-| -               |-                         
-|-----------------|-------------------------------|
-| Web Framework   |`Javalin`            |
-| Reactivity      |`HTMX`            |
-| CSS             |`TailwindCSS`|
-| Template Engine |`Pebble`|
+| -               | -             |
+| --------------- | ------------- |
+| Web Framework   | `Javalin`     |
+| CSS             | `TailwindCSS` |
+| Template Engine | `Pebble`      |

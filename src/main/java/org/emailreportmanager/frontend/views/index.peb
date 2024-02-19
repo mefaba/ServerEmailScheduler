@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
     <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <script src="main.js"></script>
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -35,18 +36,35 @@
         <div class="flex justify-center" id="section-top">
             <div>
                 <p class="mt-2 text-3xl font-bold sm:text-4xl">
-                    Server Email Scheduler
+                    Server Email Schedulers
                 </p>
             </div>
         </div>
         <!-- SECTION MAIN -->
         <div id="section-main" class="flex p-2 flex-grow">
             <div id="left-panel" class="flex flex-col basis-1/2 items-center p-2">
-                <div class="rounded mb-2 w-full h-32 bg-slate-200"><!-- Maybe a Chart Component -->Maybe a Chart Component</div>
-                <div hx-get="/table" hx-trigger="load" hx-swap="outerHTML">
-                    <!--Table Component -->
+                <!-- Tool List get from Model -->
+                {% for tool in scheduler.toolList %}
+                {% if tool.type == "table" %}
+                <div class="rounded mb-2 w-full bg-slate-200"><!-- Maybe a Table Component -->
+                    <div><!-- title-section -->Table Component</div>
+                    <div><!-- csv-section -->
+                        <div class="">
+                            <form action="/data" method="post" enctype="multipart/form-data">
+                                <input id="csvFileInput" name="csvFile" accept=".csv" type="file" class="block w-full  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100" />
+                                <button type="button" onclick="sendData()">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div><!-- response-section -->
+                        <input id="table_response" type="text" value="" readonly name="table_response" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
                 </div>
-                <div class="rounded mb-2 w-full h-32 bg-slate-200"><!-- Maybe a Char Component -->Maybe a Chart Component</div>
+                {% endif %}
+                {% if tool.type == "chart" %}
+                <div class="rounded mb-2 w-full h-32 bg-slate-200"><!-- Maybe a Chart Component -->Maybe a Chart Component</div>
+                {% endif %}
+                {% endfor %}
                 <div class="flex-grow"><!-- Empty Space Filler --></div>
                 <div class="rounded mb-2 w-full h-32 bg-slate-600"><!-- Maybe a Char Component -->Maybe a Scheduler Component</div>
                 <div id="left-panel-buttons" class="p-4">
